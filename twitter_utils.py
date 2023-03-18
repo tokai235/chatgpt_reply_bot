@@ -116,23 +116,23 @@ def get_stream(twitter_client):
                     )
 
         except ChunkedEncodingError as chunkError:
-            logger.logger.info(traceback.format_exc())
+            logger.logger.warn(traceback.format_exc())
             time.sleep(6)
             continue
 
         except ConnectionError as e:
-            logger.logger.info(traceback.format_exc())
+            logger.logger.warn(traceback.format_exc())
             run += 1
             if run < 10:
                 time.sleep(6)
-                logger.logger.info(f"再接続します {run}回目")
+                logger.logger.warn(f"再接続します {run}回目")
                 continue
             else:
                 run = 0
         except Exception as e:
             # some other error occurred.. stop the loop
-            logger.logger.info("Stopping loop because of un-handled error")
-            logger.logger.info(traceback.format_exc())
+            logger.logger.error("Stopping loop because of un-handled error")
+            logger.logger.error(traceback.format_exc())
             run = 0
 
 class ChunkedEncodingError(Exception):
