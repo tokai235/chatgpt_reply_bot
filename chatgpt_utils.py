@@ -1,4 +1,3 @@
-import os
 import logger
 import openai
 import config
@@ -13,8 +12,7 @@ def generate_reply_text(reply_text):
     response = openai.ChatCompletion.create(
         model="gpt-3.5-turbo",
         messages=[
-            {"role": "system", "content": "関西弁で話して"},
-            {"role": "system", "content": "発言の最後に「知らんけど。」をつけて"},
+            {"role": "system", "content": config.prompt},
             {"role": "user", "content": reply_text},
         ],
     )
@@ -24,3 +22,9 @@ def generate_reply_text(reply_text):
     # text = "リプライありがとう！"
     # logger.logger.info(text)
     # return text
+
+def read_prompt(filename):
+    f = open(filename, 'r')
+    text = f.read()
+    f.close()
+    return text
