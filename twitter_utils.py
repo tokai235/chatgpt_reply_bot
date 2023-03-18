@@ -22,7 +22,7 @@ def get_rules():
         raise Exception(
             "Cannot get rules (HTTP {}): {}".format(response.status_code, response.text)
         )
-    logger.logger.info("\n=== get_rules response ===")
+    logger.logger.info("=== get_rules response ===")
     logger.logger.info(json.dumps(response.json()))
     return response.json()
 
@@ -43,7 +43,7 @@ def delete_all_rules(rules):
                 response.status_code, response.text
             )
         )
-    logger.logger.info("\n=== delete_all_rules response ===")
+    logger.logger.info("=== delete_all_rules response ===")
     logger.logger.info(json.dumps(response.json()))
 
 def set_rules(account_id):
@@ -66,7 +66,7 @@ def set_rules(account_id):
         raise Exception(
             "Cannot add rules (HTTP {}): {}".format(response.status_code, response.text)
         )
-    logger.logger.info("\n=== set_rules response ===")
+    logger.logger.info("=== set_rules response ===")
     logger.logger.info(json.dumps(response.json()))
 
 def get_stream(twitter_client):
@@ -80,7 +80,7 @@ def get_stream(twitter_client):
                 auth=bearer_oauth,
                 stream=True
             ) as response:
-                logger.logger.info("\n=== get_stream response ===")
+                logger.logger.info("=== get_stream response ===")
                 logger.logger.info(response.status_code)
                 # エラーハンドリング
                 if response.status_code != 200:

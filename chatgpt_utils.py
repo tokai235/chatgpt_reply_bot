@@ -6,7 +6,7 @@ openai.api_key = config.openai_api_key
 
 def generate_reply_text(reply_text):
     reply_text = "こんにちは"
-    logger.logger.info("\n=== generate_reply_text reply_text ===")
+    logger.logger.info("=== generate_reply_text reply_text ===")
     logger.logger.info(reply_text)
 
     response = openai.ChatCompletion.create(
@@ -16,7 +16,7 @@ def generate_reply_text(reply_text):
             {"role": "user", "content": reply_text},
         ],
     )
-    logger.logger.info("\n=== generate_reply_text response ===")
+    logger.logger.info("=== generate_reply_text response ===")
     print(response.choices[0]["message"]["content"].strip())
 
     # text = "リプライありがとう！"
