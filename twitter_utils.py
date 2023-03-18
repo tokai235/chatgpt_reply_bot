@@ -6,11 +6,10 @@ import requests
 import time
 import traceback
 from chatgpt_utils import generate_reply_text
-from logger import Logger
+import logger
 
 bearer_token = os.environ['BEARER_TOKEN']
 twitter_user_id = os.environ['TWITTER_USER_ID']
-logger = Logger()
 
 def bearer_oauth(r):
     r.headers["Authorization"] = f"Bearer {bearer_token}"
@@ -26,8 +25,8 @@ def get_rules():
         raise Exception(
             "Cannot get rules (HTTP {}): {}".format(response.status_code, response.text)
         )
-    logger.log_info("\n=== get_rules response ===")
-    logger.log_info(json.dumps(response.json()))
+    logger.logger.info("\n=== get_rules response ===")
+    logger.logger.info(json.dumps(response.json()))
     return response.json()
 
 def delete_all_rules(rules):
@@ -47,8 +46,8 @@ def delete_all_rules(rules):
                 response.status_code, response.text
             )
         )
-    logger.log_info("\n=== delete_all_rules response ===")
-    logger.log_info(json.dumps(response.json()))
+    logger.logger.info("\n=== delete_all_rules response ===")
+    logger.logger.info(json.dumps(response.json()))
 
 def set_rules(account_id):
     # このアカウントに対してのリプライを監視する
@@ -70,8 +69,8 @@ def set_rules(account_id):
         raise Exception(
             "Cannot add rules (HTTP {}): {}".format(response.status_code, response.text)
         )
-    logger.log_info("\n=== set_rules response ===")
-    logger.log_info(json.dumps(response.json()))
+    logger.logger.info("\n=== set_rules response ===")
+    logger.logger.info(json.dumps(response.json()))
 
 def get_stream(twitter_client):
     stream_url = "https://api.twitter.com/2/tweets/search/stream"
@@ -84,8 +83,8 @@ def get_stream(twitter_client):
                 auth=bearer_oauth,
                 stream=True
             ) as response:
-                logger.log_info("\n=== get_stream response ===")
-                logger.log_info(response.status_code)
+                logger.logger.info("\n=== get_stream response ===")
+                logger.logger.info(response.status_code)
                 # エラーハンドリング
                 if response.status_code != 200:
                     raise Exception(
@@ -104,7 +103,7 @@ def get_stream(twitter_client):
                     author_id = json_response["data"]["author_id"] # 投稿者のID
                     reply_text = json_response["data"]["text"] #相手の送ってきた内容
 
-                    logger.log_info(json_response)
+                    logger.logger.info(json_response)
 
                     # 無限ループしないように自分への返信はしない
                     if author_id == twitter_user_id:
@@ -117,23 +116,23 @@ def get_stream(twitter_client):
                     )
 
         except ChunkedEncodingError as chunkError:
-            logger.log_info(traceback.format_exc())
+            logger.logger.info(traceback.format_exc())
             time.sleep(6)
             continue
 
         except ConnectionError as e:
-            logger.log_info(traceback.format_exc())
+            logger.logger.info(traceback.format_exc())
             run += 1
             if run < 10:
                 time.sleep(6)
-                logger.log_info(f"再接続します {run}回目")
+                logger.logger.info(f"再接続します {run}回目")
                 continue
             else:
                 run = 0
         except Exception as e:
             # some other error occurred.. stop the loop
-            logger.log_info("Stopping loop because of un-handled error")
-            logger.log_info(traceback.format_exc())
+            logger.logger.info("Stopping loop because of un-handled error")
+            logger.logger.info(traceback.format_exc())
             run = 0
 
 class ChunkedEncodingError(Exception):

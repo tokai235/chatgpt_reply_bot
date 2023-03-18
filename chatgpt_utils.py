@@ -1,11 +1,8 @@
-import logging
-from logger import Logger
-
-logger = Logger()
+import logger
 
 def generate_reply_text(reply_text):
-    logger.log_info("\n=== generate_reply_text reply_text ===")
-    logger.log_info(reply_text)
+    logger.logger.info("\n=== generate_reply_text reply_text ===")
+    logger.logger.info(reply_text)
     text = "リプライありがとう！"
-    logger.log_info(text)
+    logger.logger.info(text)
     return text
