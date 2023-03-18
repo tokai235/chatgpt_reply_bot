@@ -1,4 +1,5 @@
 # 別アカウントの access_token 取得用
+# $ python auth.py
 import os
 from twitter import *
 from dotenv import load_dotenv
