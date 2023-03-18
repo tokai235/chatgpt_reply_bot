@@ -103,7 +103,7 @@ def get_stream(twitter_client):
                     logger.logger.info(json_response)
 
                     # 無限ループしないように自分への返信はしない
-                    if author_id == twitter_user_id:
+                    if author_id == config.twitter_user_id:
                         continue
 
                     # リプライを生成してtwitterにPOST
