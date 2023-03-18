@@ -1,9 +1,7 @@
-import os
 import tweepy
 from dotenv import load_dotenv
 load_dotenv()
 from twitter_utils import *
-from chatgpt_utils import *
 
 twitter_client = tweepy.Client(
     config.bearer_token,

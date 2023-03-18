@@ -1,8 +1,7 @@
 import os
 from dotenv import load_dotenv
-
-from chatgpt_utils import read_prompt
 load_dotenv()
+from file_utils import read_prompt
 
 consumer_key = os.environ['CONSUMER_KEY']
 consumer_secret = os.environ['CONSUMER_SECRET']
