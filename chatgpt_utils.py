@@ -23,6 +23,7 @@ def generate_reply_text(reply_text):
     # logger.logger.info(text)
     # return text
 
+# chatGPTの人格注入のためのプロンプトをテキストファイルから読み込む
 def read_prompt(filename):
     f = open(filename, 'r')
     text = f.read()
