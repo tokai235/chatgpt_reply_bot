@@ -1,18 +1,15 @@
 # ほぼこれ
 # https://zenn.dev/ryo427/articles/aeb7aaf22aa8f9
 import json
-import os
 import requests
 import time
 import traceback
 from chatgpt_utils import generate_reply_text
 import logger
-
-bearer_token = os.environ['BEARER_TOKEN']
-twitter_user_id = os.environ['TWITTER_USER_ID']
+import config
 
 def bearer_oauth(r):
-    r.headers["Authorization"] = f"Bearer {bearer_token}"
+    r.headers["Authorization"] = f"Bearer {config.bearer_token}"
     r.headers["User-Agent"] = "v2FilteredStreamPython"
     return r
 

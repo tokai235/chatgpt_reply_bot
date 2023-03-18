@@ -1,8 +1,9 @@
 import os
 import logger
 import openai
+import config
 
-openai.api_key = os.environ["OPENAI_API_KEY"]
+openai.api_key = config.openai_api_key
 
 def generate_reply_text(reply_text):
     reply_text = "こんにちは"
