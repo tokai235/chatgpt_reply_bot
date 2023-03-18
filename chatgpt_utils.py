@@ -10,6 +10,7 @@ def generate_reply_text(text):
 
     response = openai.ChatCompletion.create(
         model="gpt-3.5-turbo",
+        timeout=10.0,
         messages=[
             {"role": "system", "content": config.prompt},
             {"role": "user", "content": text},
