@@ -1,10 +1,14 @@
+import requests
 import logger
-import openai
 import config
 from retrying import retry
 
-openai.api_key = config.openai_api_key
 reply_on_error = "ごめんやけど、うまく聞き取れへんかったわ。もう1回言ってくれるか？"
+
+def bearer_oauth(r):
+    r.headers["Authorization"] = f"Bearer {config.openai_api_key}"
+    r.headers["Content-Type"] = "application/json"
+    return r
 
 def generate_reply_text(text):
     logger.logger.info("=== generate_reply_text text ===")
@@ -30,18 +34,23 @@ def is_over_message_length(message):
 )
 def send_chat(text):
     logger.logger.info("=== send_chat request ===")
-    response = openai.ChatCompletion.create(
-        model="gpt-3.5-turbo",
-        timeout=5,
-        messages=[
+    payload = {
+        "model": "gpt-3.5-turbo",
+        "messages": [
             {"role": "system", "content": config.prompt},
             {"role": "user", "content": text},
         ],
-    )
+    }
+    response = requests.post(
+        "https://api.openai.com/v1/chat/completions",
+        auth=bearer_oauth,
+        json=payload
+    ).json()
+
     logger.logger.info("=== send_chat response ===")
     logger.logger.info(response)
 
-    message = response.choices[0]["message"]["content"]
+    message = response["choices"][0]["message"]["content"]
     return message
 
 if __name__ == "__main__":
