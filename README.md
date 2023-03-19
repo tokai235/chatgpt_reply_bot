@@ -41,3 +41,6 @@ $ nohup python3 main.py >/dev/null 2>&1 &
 $ pip3 install twitter
 $ python3 auth.py
 ```
+
+## うまくいかないときメモ
+- 鍵アカウントはフォローバックしてないとだめ
