@@ -2,3 +2,4 @@
 *.log*
 __pycache__
 chatgpt_prompt.txt
+secret.txt
