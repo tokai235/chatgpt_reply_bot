@@ -2,6 +2,8 @@ import requests
 import logger
 import config
 from retrying import retry
+import retrying
+from text_utils import truncated_text
 
 reply_on_error = "ごめんやけど、うまく聞き取れへんかったわ。もう1回言ってくれるか？"
 
@@ -17,8 +19,15 @@ def generate_reply_text(text):
     try:
         reply = send_chat(text)
         return reply
+    except retrying.RetryError as e:
+        logger.logger.error("=== generate_reply_text RetryError! ===")
+        logger.logger.error(e)
+        text = e.last_attempt.get()
+        # リトライ上限までリトライして文字数で引っかかってる場合は切り詰める
+        reply = truncated_text(text) if not 'raise' in text else reply_on_error
+        return reply
     except Exception as e:
-        logger.logger.error("=== generate_reply_text ERROR! ===")
+        logger.logger.error("=== generate_reply_text Error! ===")
         logger.logger.error(e)
         reply = reply_on_error
         return reply
@@ -28,9 +37,10 @@ def is_over_message_length(message):
     return len(message) > 140
 
 @retry(
-    stop_max_attempt_number=3,
+    stop_max_attempt_number=1,
     wait_fixed=500, # リトライ間隔
-    retry_on_result=is_over_message_length
+    retry_on_result=is_over_message_length,
+    wrap_exception=True,
 )
 def send_chat(text):
     logger.logger.info("=== send_chat request ===")
@@ -44,7 +54,8 @@ def send_chat(text):
     response = requests.post(
         "https://api.openai.com/v1/chat/completions",
         auth=bearer_oauth,
-        json=payload
+        json=payload,
+        timeout=10,
     ).json()
 
     logger.logger.info("=== send_chat response ===")
@@ -55,4 +66,5 @@ def send_chat(text):
 
 if __name__ == "__main__":
     text = ""
+    print("=== result ===")
     print(generate_reply_text(text))
