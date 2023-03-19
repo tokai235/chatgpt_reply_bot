@@ -15,9 +15,7 @@ def main():
     rules = get_rules()
     delete_all_rules(rules)
     set_rules(config.account_id)
-    # get_stream(twitter_client)
-
-    generate_reply_text("テストです")
+    get_stream(twitter_client)
 
 if __name__ == "__main__":
     main()
