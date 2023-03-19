@@ -31,7 +31,7 @@ def generate_reply_text(text):
         return reply
 
 @retry(
-    stop_max_attempt_number=1,
+    stop_max_attempt_number=3,
     wait_fixed=500, # リトライ間隔
     wrap_exception=True,
 )
