@@ -14,20 +14,17 @@ def generate_reply_text(text):
         reply = send_chat(text)
         return reply
     except Exception as e:
+        logger.logger.error("=== generate_reply_text ERROR! ===")
         logger.logger.error(e)
         reply = reply_on_error
         return reply
 
-def on_retry_error(e):
-    logger.logger.error(e)
-    return reply_on_error
-
 @retry(
     stop_max_attempt_number=3,
-    wait_fixed=500,
-    retry_on_exception=on_retry_error
+    wait_fixed=500, # リトライ間隔
 )
 def send_chat(text):
+    logger.logger.info("=== send_chat request ===")
     response = openai.ChatCompletion.create(
         model="gpt-3.5-turbo",
         timeout=5,
