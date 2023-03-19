@@ -42,6 +42,12 @@ $ pip3 install twitter
 $ python3 auth.py
 ```
 
+## リカバリ用にchatGPTの回答だけ取得したい
+- `chatgpt_utils.py` の`text`に質問を入れてコマンド
+```
+$ python3 chatgpt_utils.py
+```
+
 ## うまくいかないメモ
 - 鍵アカウントは `/2/tweets/search/stream`では取得できないっぽい
 - やろうと思ったら v1.1 の検索api を使って自分で polling しないといけないかも

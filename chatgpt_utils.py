@@ -38,3 +38,7 @@ def send_chat(text):
 
     message = response.choices[0]["message"]["content"]
     return message
+
+if __name__ == "__main__":
+    text = ""
+    print(generate_reply_text(text))
