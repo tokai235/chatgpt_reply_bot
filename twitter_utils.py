@@ -130,7 +130,8 @@ def get_stream(twitter_client):
             # some other error occurred.. stop the loop
             logger.logger.error("Stopping loop because of un-handled error")
             logger.logger.error(traceback.format_exc())
-            run = 0
+            time.sleep(6)
+            continue
 
 class ChunkedEncodingError(Exception):
     pass
