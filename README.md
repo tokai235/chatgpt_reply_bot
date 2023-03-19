@@ -37,7 +37,7 @@ $ git clone https://github.com/ibis7895123/chatgpt_reply_bot.git
 1. バックグラウンドで起動
 ```
 # 自前でログを出すので nohup のログを出力しない
-$ nohup python main.py >chatgpt_reply_bot.log 2>&1 &
+$ nohup python3 main.py >chatgpt_reply_bot.log 2>&1 &
 ```
 
 ## 別アカウントにリプライをさせる
