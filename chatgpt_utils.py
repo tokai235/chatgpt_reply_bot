@@ -19,9 +19,14 @@ def generate_reply_text(text):
         reply = reply_on_error
         return reply
 
+def is_over_message_length(message):
+    # 140字以内でないとツイートできないので
+    return len(message) > 140
+
 @retry(
     stop_max_attempt_number=3,
     wait_fixed=500, # リトライ間隔
+    retry_on_result=is_over_message_length
 )
 def send_chat(text):
     logger.logger.info("=== send_chat request ===")
