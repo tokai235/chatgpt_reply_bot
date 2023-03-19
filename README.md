@@ -9,15 +9,9 @@ $ sudo yum install python3 -y
 $ curl -O https://bootstrap.pypa.io/get-pip.py
 $ python3 get-pip.py --user
 ```
-1. コマンドのエイリアス登録
-```
-$ echo "alias python='python3'" > ~/.bashrc
-$ echo "alias pip='pip3'" > ~/.bashrc
-$ source ~/.bashrc
-```
 1. パッケージをインストール
 ```
-$ pip install openai tweepy python-dotenv retrying
+$ pip3 install openai tweepy python-dotenv retrying
 ```
 1. git のインストール
 ```
@@ -44,6 +38,6 @@ $ nohup python3 main.py >/dev/null 2>&1 &
 - そのアカウントの access_token / secret を取得する必要がある
 - 以下コマンドで取得する
 ```
-$ pip install twitter
-$ python auth.py
+$ pip3 install twitter
+$ python3 auth.py
 ```
