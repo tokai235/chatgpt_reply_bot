@@ -24,6 +24,7 @@ def generate_reply_text(text):
         logger.logger.error(e)
         text = e.last_attempt.get()
         # リトライ上限までリトライして文字数で引っかかってる場合は切り詰める
+        # エラーの場合は `raise` のワードが出るはずなのでそれで判断する
         reply = truncated_text(text) if not 'raise' in text else reply_on_error
         return reply
     except Exception as e:
@@ -66,5 +67,4 @@ def send_chat(text):
 
 if __name__ == "__main__":
     text = ""
-    print("=== result ===")
-    print(generate_reply_text(text))
+    logger.logger.info(generate_reply_text(text))
