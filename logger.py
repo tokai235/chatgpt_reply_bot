@@ -15,7 +15,7 @@ logger = logging.getLogger(__name__)
 #   interval: ログローテーション間隔
 #   backupCount: バックアップとして保持するログファイル数
 handler = logging.handlers.TimedRotatingFileHandler(
-    "chatgpt_reply_bot.log", when="D", interval=1, backupCount=14
+    "bot.log", when="D", interval=1, backupCount=14
 )
 # フォーマットを設定
 handler.setFormatter(logging.Formatter(log_formatter))
