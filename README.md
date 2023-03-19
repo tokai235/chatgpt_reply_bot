@@ -6,7 +6,7 @@ $ sudo amazon-linux-extras install -y python3.8
 ```
 1. パッケージをインストール
 ```
-$ pip install openai tweepy python-dotenv
+$ pip install openai tweepy python-dotenv retrying
 ```
 1. git のインストール
 1. git pull
