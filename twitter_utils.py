@@ -92,25 +92,21 @@ def get_stream(twitter_client):
 
                 # ツイートの読み取り
                 for response_line in response.iter_lines():
-                    if not response_line:
-                        continue
+                    if response_line:
+                        json_response = json.loads(response_line)
+                        tweet_id = json_response["data"]["id"] # ツイートID
+                        author_id = json_response["data"]["author_id"] # 投稿者のID
+                        reply_text = json_response["data"]["text"] #相手の送ってきた内容
 
-                    json_response = json.loads(response_line)
-                    tweet_id = json_response["data"]["id"] # ツイートID
-                    author_id = json_response["data"]["author_id"] # 投稿者のID
-                    reply_text = json_response["data"]["text"] #相手の送ってきた内容
+                        logger.logger.info(json_response)
 
-                    logger.logger.info(json_response)
-
-                    # 無限ループしないように自分への返信はしない
-                    if author_id == config.twitter_user_id:
-                        continue
-
-                    # リプライを生成してtwitterにPOST
-                    twitter_client.create_tweet(
-                        text = generate_reply_text(reply_text),
-                        in_reply_to_tweet_id = tweet_id
-                    )
+                        # 無限ループしないように自分への返信はしない
+                        if author_id == config.twitter_user_id:
+                            # リプライを生成してtwitterにPOST
+                            twitter_client.create_tweet(
+                                text = generate_reply_text(reply_text),
+                                in_reply_to_tweet_id = tweet_id
+                            )
 
         except ChunkedEncodingError as chunkError:
             logger.logger.warn(traceback.format_exc())
