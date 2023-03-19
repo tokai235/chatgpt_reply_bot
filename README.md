@@ -42,5 +42,6 @@ $ pip3 install twitter
 $ python3 auth.py
 ```
 
-## うまくいかないときメモ
-- 鍵アカウントはフォローバックしてないとだめ
+## うまくいかないメモ
+- 鍵アカウントは `/2/tweets/search/stream`では取得できないっぽい
+- やろうと思ったら v1.1 の検索api を使って自分で polling しないといけないかも
