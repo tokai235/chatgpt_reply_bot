@@ -42,6 +42,11 @@ $ pip3 install twitter
 $ python3 auth.py
 ```
 
+## プロセス動いてるか確認したい
+```
+$ ps ux
+```
+
 ## リカバリ用にchatGPTの回答だけ取得したい
 - `chatgpt_utils.py` の`text`に質問を入れてコマンド
 ```
