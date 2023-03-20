@@ -1,3 +1,6 @@
-max_length = 137
+max_length = 140
 def truncated_text(text: str):
-    return text[:max_length] + "文字数"
+    if len(text) <= 140:
+        return text
+
+    return text[:(max_length - 3)] + "文字数"
