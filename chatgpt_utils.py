@@ -48,7 +48,7 @@ def send_chat(text):
         "https://api.openai.com/v1/chat/completions",
         auth=bearer_oauth,
         json=payload,
-        timeout=20,
+        timeout=30,
     ).json()
 
     logger.logger.info("=== send_chat response ===")
