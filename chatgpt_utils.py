@@ -32,7 +32,7 @@ def generate_reply_text(text):
 
 @retry(
     stop_max_attempt_number=3,
-    wait_fixed=500, # リトライ間隔
+    wait_fixed=3000, # リトライ間隔
     wrap_exception=True,
 )
 def send_chat(text):
@@ -48,7 +48,7 @@ def send_chat(text):
         "https://api.openai.com/v1/chat/completions",
         auth=bearer_oauth,
         json=payload,
-        timeout=10,
+        timeout=20,
     ).json()
 
     logger.logger.info("=== send_chat response ===")
